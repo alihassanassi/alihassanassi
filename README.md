@@ -1,50 +1,75 @@
-# Ali Hassan Assi
+# JARVIS
 
-**Independent Security Researcher · San Diego, CA**
-
----
-
-```
-Building autonomous AI tools for cybersecurity.
-Local-first. Fails-closed. No cloud. All mine.
-```
+A local-first AI cybersecurity operations console. One machine, no cloud, 
+no telemetry. ~240,000+ lines across 600+ Python files. 27+ subsystems 
+across 33 directories. 260+ registered tools. Built solo.
 
 ---
 
-### What I'm building
+## What it is
 
-**ORYN** — A local-first autonomous cybersecurity operations console.
-Dual-model LLM · 7-gate safety chain · 6-layer memory · Voice-interactive · 143 files · 7 days.
+JARVIS is an autonomous operator. It runs bug bounty recon, watches its 
+own behavior for drift, talks through a full voice pipeline, and logs 
+every action it takes into a hash-chained audit log currently at 81,000+ 
+records. It is designed under one hard constraint: it cannot be told to 
+ignore its own safety rules, because the rules are not policy — they are 
+architecture.
 
-→ [github.com/alihassanassi/ORYN](https://github.com/alihassanassi/ORYN)
+## Core architecture
 
----
+**phi4-mini reasoning core.** All security analysis, tool selection, 
+and conversation runs on phi4-mini via Ollama. Locally hosted. No API 
+keys. No data leaves the machine.
 
-### Research
+**6-layer memory.** Working → episodic → semantic → preference → 
+project → system. Promotion rules move knowledge through the stack as 
+it earns persistence.
 
-Three papers on autonomous AI security tooling — architecture, safety, and the human story behind the build.
+**7-gate safety chain, all fail-closed.** Config gate, command 
+blocklist, scope gate, autonomy policy, approval gate, audit gate, 
+hardware kill switch. Every gate fails closed. Offensive tools like 
+`sqlmap`, `metasploit`, `hydra`, and report submission are flagged 
+never-autonomous and require explicit operator approval.
 
-- *ORYN: Architecture of a Local-First Autonomous Cybersecurity Console* — arXiv cs.CR 2026
-- *Fails Closed: Safety-First Design for Autonomous Offensive AI Tools* — arXiv cs.CR 2026  
-- *One Person, Seven Days: Building a Production AI Security Console* — arXiv cs.CY 2026
+**Hash-chained audit log.** Every tool call, finding, memory write, 
+and policy decision is written into an immutable chain. Chain 
+integrity is verified on every boot. Currently 81,000+ records and 
+counting.
 
----
+**Hardware kill switch.** Ctrl+Alt+Shift+K plus a sentinel file on 
+disk. Dual-mechanism, software-bypass resistant. Halts all autonomous 
+operations immediately.
 
-### Background
+**Consciousness layer.** Soul engine, emotional intelligence, persona 
+drift tracking, inner voice daemon, and cross-session relationship 
+tracking. Not ornamental — they govern when JARVIS speaks, what it 
+raises unprompted, and how it remembers the operator between sessions.
 
-Jeweler → Cybersecurity researcher.
-Palomar College · San Marcos, CA.
-Bug bounty · Ethical hacking · AI-assisted recon.
+**Voice I/O pipeline.** Kokoro ONNX primary (~100ms, CPU), Piper and 
+SAPI fallbacks. Seven personas. Whisper STT with wake word and 
+barge-in handling.
 
----
+**Autonomous recon pipeline.** subfinder → httpx → nuclei → ffuf → JS 
+secret extraction → historical URL discovery. SmartScope pre-probe 
+filters auth walls and internal hostnames before any scanning. Scope 
+enforcement pulls directly from HackerOne's program pages — never 
+from third-party aggregators.
 
-### Stack
+## Philosophy
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![AI](https://img.shields.io/badge/Local_LLM-qwen3:14b-brightgreen?style=flat)
-![Security](https://img.shields.io/badge/Bug_Bounty-HackerOne-orange?style=flat)
-![Voice](https://img.shields.io/badge/Voice-Chatterbox_TTS-blue?style=flat)
+AI should serve the individual. Local, private, loyal, answering to 
+nobody but the person who built it. This is why JARVIS runs entirely 
+on local hardware rather than in someone else's cloud.
 
----
+The interesting problem in building a personal AI isn't intelligence — 
+it's presence. And the interesting problem in building an autonomous 
+security agent isn't capability — it's restraint.
 
-*"One person. Seven days. These files."*
+## Research
+
+Architectural writing on the design choices behind the system is 
+published at [alihasanassi.com](https://alihasanassi.com).
+
+## Status
+
+Active development. Single-operator system. Not accepting contributions.
