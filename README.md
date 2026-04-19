@@ -1,7 +1,7 @@
 # JARVIS
 
 A local-first AI cybersecurity operations console. One machine, no cloud, 
-no telemetry. ~240,000+ lines across 600+ Python files. 27+ subsystems 
+no telemetry. ~241,000+ lines across 731 Python files. 27+ subsystems 
 across 33 directories. 260+ registered tools. Built solo.
 
 ---
