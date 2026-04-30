@@ -72,4 +72,4 @@ published at [alihasanassi.com](https://alihasanassi.com).
 
 ## Status
 
-Active development. Single-operator system. Not accepting contributions.
+Active development. Single-operator system. 
