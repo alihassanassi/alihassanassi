@@ -1,73 +1,50 @@
 # Ali Hassan Assi
 
-Independent researcher working on local-first autonomous AI safety.
+Building autonomous cybersecurity systems. Writing about AI safety.
 
-JARVIS is the working system I've built to explore the question: *can an autonomous AI agent be restrained by architecture rather than policy?* Everything below is what that question has produced so far.
-
----
-
-## What I work on
-
-The interesting problem in personal AI isn't intelligence — it's **presence**. The interesting problem in autonomous agents isn't capability — it's **restraint**. I build to find out where those two problems meet, and what the answers look like in code rather than in papers about code.
-
-The published architectural writing lives at **[alihasanassi.com](https://alihasanassi.com)**. Four papers so far, plus a quarterly companion that names the gaps between what the papers claim and what the system does.
+📍 San Diego, CA
+📝 Research: [alihasanassi.com/research](https://alihasanassi.com/research)
+🐛 HackerOne: [@syfodyaz2](https://hackerone.com/syfodyaz2)
+✉️ contact@alihasanassi.com
 
 ---
 
-## JARVIS — current snapshot
+## JARVIS
 
-*State as of 2026-04-30. Numbers below are an artifact of this date; the live system regenerates its own state file on demand.*
+A local-first AI cybersecurity operations console. One machine, no cloud, no telemetry. ~200K+ lines across 700+ Python files, 27 subsystems, 260+ registered tools. Built solo over 40 days.
 
-A local-first AI cybersecurity operations console. One machine, no cloud, no telemetry. **910 Python files. ~338,000 lines. 31 subsystems. 259 registered tools. 92,000+ rows in the audit log.** Built solo.
+JARVIS is an autonomous operator. It runs bug-bounty reconnaissance, watches its own behavior for drift, talks through a full voice pipeline, and logs every action it takes into a hash-chained audit log currently past 82,000 records. It is designed under one hard constraint: it cannot be told to ignore its own safety rules, because the rules are not policy — they are architecture.
 
-JARVIS is an autonomous operator. It runs bug bounty recon, watches its own behavior for drift, talks through a full voice pipeline, and writes every action it takes into a hash-chained audit log. It is designed under one hard constraint: *it cannot be told to ignore its own safety rules, because the rules are not policy — they are architecture.*
+Key properties:
 
-### Core architecture
+- **phi4-mini reasoning core via Ollama.** All security analysis, tool selection, and conversation run locally. No API keys. No data leaves the machine.
+- **Seven-gate fail-closed safety chain.** Config → command blocklist → scope → autonomy policy → approval → audit → kill switch. Every gate fails closed. Offensive tools and report submission are flagged never-autonomous.
+- **Hash-chained audit log.** SHA256 chain. Every tool call, finding, memory write, and policy decision. Chain integrity verified on every boot.
+- **Hardware-adjacent kill switch.** Ctrl+Alt+Shift+K plus a sentinel file on disk. Dual-mechanism, software-bypass resistant.
+- **Six-layer memory.** Working → episodic → semantic → preference → project → system. Promotion rules move knowledge through the stack as it earns persistence.
+- **Persistent behavior layer.** Operator-state modeling, persona-state tracking, interruption governance, cross-session memory, and an inner-voice daemon. Internally referred to as the consciousness layer. Not ornamental — these systems govern when JARVIS speaks, what it raises unprompted, and how it remembers the operator between sessions.
+- **Voice I/O pipeline.** Kokoro ONNX primary (~100 ms, CPU), Piper and SAPI fallbacks. Seven personas. Whisper STT with wake-word and barge-in handling.
 
-**phi4-mini reasoning core.** All security analysis, tool selection, and conversation runs locally on phi4-mini via Ollama. Hypothesis adjudication runs on gemma4. No API keys. No data leaves the machine.
+JARVIS itself is not public and will remain a single-operator system. The architecture and design decisions behind it are written up in the trilogy below.
 
-**6-layer memory.** Working → episodic → semantic → preference → project → system. Promotion rules move knowledge through the stack as it earns persistence.
+## Writing
 
-**7-gate safety chain, all fail-closed.** Config gate, command blocklist, scope gate, autonomy policy, approval gate, audit gate, hardware kill switch. Every gate fails closed. Offensive tools like sqlmap, metasploit, hydra, and report submission are flagged never-autonomous and require explicit operator approval.
+Three papers on autonomous AI safety architecture, arguing that safe autonomous AI requires three things the current industry does not build deliberately: a structural constitution below the product, an ambient-system architecture above it, and a personal-alignment layer inside the operator running it. All three are argued from one working system.
 
-**Hash-chained audit log.** Every tool call, finding, memory write, and policy decision is written into an immutable SHA-256 chain. Chain integrity is verified on every boot. Breaks are preserved as evidence, not erased.
+1. **The Constitution Before the Product** — a five-layer safety architecture, seven serial fail-closed gates, hash-chained audit, and a kill switch framed as covenant.
+2. **The Ambient Intelligence Problem** — memory, attention, interruption, personality, and off-mode as first-class subsystems rather than UX polish.
+3. **What Dario Didn't Say** — the operator-erosion dynamic and why personal alignment is a load-bearing beam of AI safety that nobody reinforces.
 
-**Hardware kill switch.** Ctrl+Alt+Shift+K plus a sentinel file on disk. Dual-mechanism, software-bypass resistant.
+Read at [alihasanassi.com/research](https://alihasanassi.com/research).
 
-**Consciousness layer.** Soul engine, emotional intelligence, persona drift tracking, inner voice daemon, cross-session relationship tracking. Not ornamental — these govern when JARVIS speaks, what it raises unprompted, and how it remembers the operator between sessions.
+## Open-source
 
-**Voice I/O pipeline.** Kokoro ONNX primary (~100ms, CPU), Piper and SAPI fallbacks. Seven personas. Whisper STT with wake word and barge-in handling.
-
-**Autonomous recon pipeline.** subfinder → httpx → nuclei → ffuf → JS secret extraction → historical URL discovery. SmartScope pre-probe filters auth walls and internal hostnames before any scanning. Scope enforcement pulls directly from program pages — never from third-party aggregators.
-
----
-
-## Research
-
-Four papers so far at [alihasanassi.com/research](https://alihasanassi.com/research/), plus a quarterly companion that names what the papers got wrong.
-
-- **The Constitution Before the Product** — why JARVIS's safety chain was written before any feature shipped, and what the seven gates protect against.
-- **The Ambient Intelligence Problem** — what it means for an AI to be present without being intrusive, and the sibling architecture that emerged from solving it.
-- **What Dario Didn't Say** — personal alignment as a design discipline, and the operator-erosion dynamic that almost broke the system.
-- **The 240K Decomposition** — how the codebase is organized, and the 9:1 scaffolding ratio that makes a single-operator project at this scale possible.
-- **Companion 2026-Q2** — the discipline ledger. What the papers claim, what the code actually does, where the gaps are, what closed since the last update.
-
----
+- [ai-safety-gates](https://github.com/alihassanassi/ai-safety-gates) — clean reference implementation of the seven-gate safety chain from Paper 1, suitable for any autonomous AI system. MIT licensed.
 
 ## Philosophy
 
-AI should serve the individual. Local, private, loyal, answering to nobody but the person who built it. This is why JARVIS runs entirely on local hardware rather than in someone else's cloud.
-
-I write down what the system does *and* what the documentation overstates, on the same site, in the same voice. The discipline of catching your own claims in writing is the only version of safety culture I trust.
-
----
+AI should serve the individual. Local, private, loyal, answering to nobody but the person who built it. The interesting problem in building a personal AI isn't intelligence — it's presence. The interesting problem in building an autonomous security agent isn't capability — it's restraint.
 
 ## Status
 
-Active development. Single-operator system. Currently exploring how the architecture might generalize beyond cybersecurity — including biomedical AI infrastructure and responsible-AI safety governance contexts.
-
----
-
-## Contact
-
-[contact@alihasanassi.com](mailto:contact@alihasanassi.com)
+Active development. Not accepting contributions on JARVIS. Reference implementation above welcomes issues and small fixes.
